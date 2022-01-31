@@ -31,12 +31,14 @@ def main():
                 #Assign variable with FQDN and directory
                 dir_enum = f"http://{sys.argv[1]}/{dir}{extension}"
                 #Assign variable with response from server
-                response = requests.get(dir_enum)
+                response = requests.get(dir_enum, allow_redirects=False)
                 #Check if response code is 404 (Not Found), pass if True
                 if response.status_code==404:
+                    response.close()
                     pass
                 else:
                     print("Valid directory:" ,dir_enum)
+                    response.close()
 
     else:
         for dir in directories:
