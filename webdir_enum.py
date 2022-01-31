@@ -3,6 +3,15 @@
 #Import modules
 import requests
 import sys
+import os
+
+
+print("\
+               _         _ _       \n \
+__      _____| |__   __| (_)_ __  \n \
+\ \ /\ / / _ \ '_ \ / _` | | '__| \n \
+ \ V  V /  __/ |_) | (_| | | |    \n \
+  \_/\_/ \___|_.__/ \__,_|_|_| ")
 
 #Assign variable with wordlist content
 subdirectory_list = open("wordlist.txt").read()
@@ -14,25 +23,35 @@ file_extensions = ["",".html",".txt",".php", \
                    ".js",".aspx",".dll", \
                    ".shtml",".rb",".yml"]
 
-if len(sys.argv) < 3:
-    for extension in file_extensions:
-        #Iterate through the words in directories list
+def main():
+    if len(sys.argv) < 3:
+        for extension in file_extensions:
+            #Iterate through the words in directories list
+            for dir in directories:
+                #Assign variable with FQDN and directory
+                dir_enum = f"http://{sys.argv[1]}/{dir}{extension}"
+                #Assign variable with response from server
+                response = requests.get(dir_enum)
+                #Check if response code is 404 (Not Found), pass if True
+                if response.status_code==404:
+                    pass
+                else:
+                    print("Valid directory:" ,dir_enum)
+
+    else:
         for dir in directories:
-            #Assign variable with FQDN and directory
-            dir_enum = f"http://{sys.argv[1]}/{dir}{extension}"
-            #Assign variable with response from server
+            dir_enum = f"http://{sys.argv[1]}/{dir}.{sys.argv[2]}"
             response = requests.get(dir_enum)
-            #Check if response code is 404 (Not Found), pass if True
             if response.status_code==404:
                 pass
             else:
                 print("Valid directory:" ,dir_enum)
 
-else:
-    for dir in directories:
-        dir_enum = f"http://{sys.argv[1]}/{dir}.{sys.argv[2]}"
-        response = requests.get(dir_enum)
-        if response.status_code==404:
-            pass
-        else:
-            print("Valid directory:" ,dir_enum)
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)
