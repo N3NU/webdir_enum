@@ -11,10 +11,21 @@ print("\
 __      _____| |__   __| (_)_ __  \n \
 \ \ /\ / / _ \ '_ \ / _` | | '__| \n \
  \ V  V /  __/ |_) | (_| | | |    \n \
-  \_/\_/ \___|_.__/ \__,_|_|_| ")
+  \_/\_/ \___|_.__/ \__,_|_|_|    \n\nCreated by N3NU\n")
 
 #Assign variable with wordlist content
-subdirectory_list = open("wordlist.txt").read()
+try:
+    wordlist = input("Enter wordlist (leave blank for default):")
+    if len(wordlist) > 0:
+        subdirectory_list = open(wordlist, encoding="ISO-8859-1").read()
+    else:
+        subdirectory_list = open("wordlist.txt", encoding="ISO-8859-1").read()
+except KeyboardInterrupt:
+    try:
+        sys.exit(0)
+    except SystemExit:
+        os._exit(0)
+
 #Assign variable with a list of subdirectory_list content
 directories = subdirectory_list.splitlines()
 #Assign variabe with different file extensions
