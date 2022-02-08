@@ -4,17 +4,10 @@
 import requests
 import sys
 import os
-from colorama import Fore, Style
+import lib.banner
 
-i_dot = Fore.RED + '(_)'
-i_dot_top = Fore.RED + '_'
-color_reset = Style.RESET_ALL
-print("\
-               _         _ {}{}       \n \
-__      _____| |__   __| {}{}_ __  \n \
-\ \ /\ / / _ \ '_ \ / _` | | '__| \n \
- \ V  V /  __/ |_) | (_| | | |    \n \
-  \_/\_/ \___|_.__/ \__,_|_|_|   version 0.1.0 \n\nCreated by N3NU\n".format(i_dot_top, color_reset, i_dot, color_reset))
+#Display Banner
+lib.banner.banner()
 
 #Assign variable with wordlist content
 try:
